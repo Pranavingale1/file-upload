@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}HOME | Upload file{% endblock title %}
+{% block content %}
+<div style="margin: 50px auto; max-width: 400px; color: white;">
+    <h1 style="text-align: center; color: #ff9800;">Upload File</h1>
+    {% if not summary %}
+    <form method="post" enctype="multipart/form-data" style="background-color: #333; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+            {{ form.as_p }}
+        </div>  
+        <button type="submit" style="background-color: #ff9800; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Upload</button>
+    </form>
+    {% else %}
+    <div style="background-color: #333; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);">
+    <a href="{% url "upload_file" %}"> <button type="submit" style="background-color: #ff9800; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Upload New</button></a>
+</div>
+    {% endif %}
+</div>
+
+<br>
+{% if summary %}
+<div style="max-width: 800px; margin: 50px auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h1 style="color: #007bff; text-align: center; margin-bottom: 20px;">Summary Report</h1>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th style="background-color: #f2f2f2; padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Statistic</th>
+                <th style="background-color: #f2f2f2; padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in summary.items %}
+            <tr>
+                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ key }}</td>
+                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+
+
+
+
+{% endblock content %}
